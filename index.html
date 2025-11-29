@@ -10,9 +10,7 @@
   <title>色見えで | STEP1</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -29,7 +27,7 @@
     .frame {
       width: 100vw;
       height: 100vh;
-      max-width: 480px;   /* スマホっぽい幅に制限 */
+      max-width: 480px;
       max-height: 900px;
       border: 1px solid #eee;
       position: relative;
@@ -38,7 +36,7 @@
       flex-direction: column;
     }
 
-    /* 上部の切り替えボタン */
+    /* タブ */
     .tabs {
       display: flex;
       border-bottom: 1px solid #ddd;
@@ -58,10 +56,10 @@
       color: #fff;
     }
 
-    /* コンテンツエリア */
+    /* ビューエリア */
     .view {
       flex: 1;
-      display: none;        /* JSで切り替え */
+      display: none;
       padding: 12px;
     }
     .view.active {
@@ -70,32 +68,22 @@
       align-items: center;
     }
 
-    /* 縦組テキスト（A1） */
+    /* A1縦組：12pt */
     .vertical {
       writing-mode: vertical-rl;
       text-orientation: upright;
-      font-size: 12pt;        /* 画面上の 12pt 指定 */
-      line-height: 1.7;
+      font-size: 12pt;
+      line-height: 1.9;
       letter-spacing: 0.05em;
       white-space: pre-wrap;
     }
 
-    /* 画像ビュー（A2） */
-    .image-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
+    /* A2画像：260pxに固定することで文字サイズ感を揃える */
     .image-wrap img {
-      max-width: 90%;
-      max-height: 90%;
+      width: 260px;        /* ←ここが超重要 */
       height: auto;
-      /* 画像の中の文字サイズ感を
-         実際のテキストと近づけたい時はここを調整 */
+      display: block;
     }
-
   </style>
 </head>
 
@@ -103,13 +91,12 @@
 
   <div class="frame">
 
-    <!-- タブ（A1 / A2 切り替え） -->
     <div class="tabs">
-      <button id="btn-a1" class="tab-btn active">A1</button>
-      <button id="btn-a2" class="tab-btn">A2</button>
+      <button id="btn-a1" class="tab-btn active">A1：ベタ組</button>
+      <button id="btn-a2" class="tab-btn">A2：デザイン組</button>
     </div>
 
-    <!-- A1：プレーンなベタ組（テキスト） -->
+    <!-- A1 -->
     <div id="view-a1" class="view active">
       <div class="vertical">
 色見えで
@@ -120,11 +107,10 @@
       </div>
     </div>
 
-    <!-- A2：書体選定して組んだ PNG 画像 -->
+    <!-- A2 -->
     <div id="view-a2" class="view">
       <div class="image-wrap">
-        <!-- a2.png を同じフォルダに置く -->
-        <img src="a2.png" alt="色見えで（デザイン組み）">
+        <img src="a2.png" alt="色見えで（PNG）">
       </div>
     </div>
 
@@ -136,22 +122,19 @@
     const viewA1 = document.getElementById('view-a1');
     const viewA2 = document.getElementById('view-a2');
 
-    function showA1() {
+    btnA1.onclick = () => {
       viewA1.classList.add('active');
       viewA2.classList.remove('active');
       btnA1.classList.add('active');
       btnA2.classList.remove('active');
-    }
+    };
 
-    function showA2() {
+    btnA2.onclick = () => {
       viewA2.classList.add('active');
       viewA1.classList.remove('active');
       btnA2.classList.add('active');
       btnA1.classList.remove('active');
-    }
-
-    btnA1.addEventListener('click', showA1);
-    btnA2.addEventListener('click', showA2);
+    };
   </script>
 
 </body>
